@@ -9,3 +9,8 @@ func SaveTodo(todo entity.Todo) error {
 	todoList = append(todoList, todo)
 	return nil
 }
+
+// GetTodoList ...
+func GetTodoList() ([]entity.Todo, error) {
+	return todoList, nil
+}

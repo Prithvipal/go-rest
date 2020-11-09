@@ -14,6 +14,7 @@ func h2(w http.ResponseWriter, _ *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/todo", handler.CreateTodo).Methods("POST")
+	r.HandleFunc("/api/v1/todo", handler.GetTodoList).Methods("GET")
 	http.ListenAndServe(":8080", r)
 }
 
