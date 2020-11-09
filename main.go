@@ -5,15 +5,16 @@ import (
 	"net/http"
 
 	"github.com/Prithvipal/go-rest/handler"
+	"github.com/gorilla/mux"
 )
 
 func h2(w http.ResponseWriter, _ *http.Request) {
 	io.WriteString(w, "Hello from a HandleFunc #2!\n")
 }
 func main() {
-	http.HandleFunc("/api/v1/todo", handler.CreateToDo)
-	http.HandleFunc("/endpoint", h2)
-	http.ListenAndServe(":8080", nil)
+	r := mux.NewRouter()
+	r.HandleFunc("/api/v1/todo", handler.CreateTodo).Methods("POST")
+	http.ListenAndServe(":8080", r)
 }
 
 // import (
