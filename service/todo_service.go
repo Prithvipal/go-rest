@@ -33,3 +33,14 @@ func GetTodoList() (todos []dto.TodoDTO, err error) {
 	}
 	return
 }
+
+// GetTodoByID ...
+func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
+	todo, err := dal.GetTodoByID(ID)
+	if err != nil {
+		return
+	}
+	todoDto.ID = todo.ID
+	todoDto.Value = todo.Value
+	return
+}

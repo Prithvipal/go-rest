@@ -3,6 +3,7 @@ package dal
 import (
 	"strconv"
 
+	"github.com/Prithvipal/go-rest/apierrors"
 	"github.com/Prithvipal/go-rest/entity"
 )
 
@@ -18,4 +19,14 @@ func SaveTodo(todo entity.Todo) error {
 // GetTodoList ...
 func GetTodoList() ([]entity.Todo, error) {
 	return todoList, nil
+}
+
+// GetTodoByID ...
+func GetTodoByID(ID string) (entity.Todo, error) {
+	for _, todo := range todoList {
+		if todo.ID == ID {
+			return todo, nil
+		}
+	}
+	return entity.Todo{}, apierrors.ErrNotFount
 }

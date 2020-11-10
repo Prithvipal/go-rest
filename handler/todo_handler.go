@@ -5,8 +5,10 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Prithvipal/go-rest/apierrors"
 	"github.com/Prithvipal/go-rest/dto"
 	"github.com/Prithvipal/go-rest/service"
+	"github.com/gorilla/mux"
 )
 
 // CreateTodo ...
@@ -30,9 +32,28 @@ func GetTodoList(w http.ResponseWriter, req *http.Request) {
 	todos, err := service.GetTodoList()
 	if err != nil {
 		log.Println("Error while getting TODO List", err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	writeJSON(w, todos)
+}
+
+// GetTodoByID ...
+func GetTodoByID(w http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	ID := vars["ID"]
+	todo, err := service.GetTodoByID(ID)
+	if err != nil {
+		if err == apierrors.ErrNotFount {
+			log.Printf("Record not found for ID: %v, err= %v", ID, err.Error())
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		log.Println("Error while getting TODO List", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, todo)
 }
 
 func writeJSON(w http.ResponseWriter, records interface{}) {
