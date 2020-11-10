@@ -59,6 +59,24 @@ func GetTodoByID(w http.ResponseWriter, req *http.Request) {
 	writeJSON(w, todo)
 }
 
+// GetTodoDetailByID handler/api function to return Todo Detail by ID
+func GetTodoDetailByID(w http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	ID := vars["ID"]
+	todo, err := service.GetTodoDetailByID(ID)
+	if err != nil {
+		if err == apierrors.ErrNotFount {
+			log.Printf("Record not found for ID: %v, err= %v", ID, err.Error())
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		log.Println("Error while getting TODO List", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, todo)
+}
+
 // DeleteTodoByID ...
 func DeleteTodoByID(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)

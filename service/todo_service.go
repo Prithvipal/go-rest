@@ -45,6 +45,19 @@ func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
 	return
 }
 
+// GetTodoDetailByID a service function to return Todo Detail
+func GetTodoDetailByID(ID string) (todoDto dto.TodoDetailDTO, err error) {
+	todo, err := dal.GetTodoByID(ID)
+	if err != nil {
+		return
+	}
+	todoDto.ID = todo.ID
+	todoDto.Value = todo.Value
+	todoDto.CreatedAt = todo.CreatedAt
+	todoDto.UpdatedAt = todo.UpdatedAt
+	return
+}
+
 // DeleteTodoByID ...
 func DeleteTodoByID(ID string) error {
 	return dal.DeleteTodoByID(ID)
