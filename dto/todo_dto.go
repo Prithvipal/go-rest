@@ -7,6 +7,6 @@ type TodoBaseDTO struct {
 
 // TodoDTO ...
 type TodoDTO struct {
-	ID int `json:"id"`
+	ID string `json:"id"`
 	TodoBaseDTO
 }

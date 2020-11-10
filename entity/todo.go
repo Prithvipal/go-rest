@@ -4,7 +4,7 @@ import "time"
 
 // Todo ...
 type Todo struct {
-	ID        int
+	ID        string
 	Value     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
