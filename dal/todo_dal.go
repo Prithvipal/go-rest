@@ -49,3 +49,14 @@ func getIndex(ID string) int {
 	}
 	return -1
 }
+
+// UpdateTodoByID to update TODO by id in data access layer
+func UpdateTodoByID(ID string, todo entity.Todo) error {
+	index := getIndex(ID)
+	if index == -1 {
+		return apierrors.ErrNotFount
+	}
+	todoList[index].UpdatedAt = todo.UpdatedAt
+	todoList[index].Value = todo.Value
+	return nil
+}

@@ -49,3 +49,11 @@ func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
 func DeleteTodoByID(ID string) error {
 	return dal.DeleteTodoByID(ID)
 }
+
+// UpdateTodoByID a service method to update Todo
+func UpdateTodoByID(ID string, todoDTO dto.TodoBaseDTO) (err error) {
+	todo := entity.Todo{}
+	todo.Value = todoDTO.Value
+	todo.UpdatedAt = time.Now()
+	return dal.UpdateTodoByID(ID, todo)
+}

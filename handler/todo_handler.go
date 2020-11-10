@@ -88,6 +88,29 @@ func writeJSON(w http.ResponseWriter, records interface{}) {
 	w.Write(data)
 }
 
-func writeError() {
+// UpdateTodoByID ...
+func UpdateTodoByID(w http.ResponseWriter, req *http.Request) {
 
+	vars := mux.Vars(req)
+	ID := vars["ID"]
+	var todoDTO dto.TodoBaseDTO
+	err := json.NewDecoder(req.Body).Decode(&todoDTO)
+	if err != nil {
+		log.Println("Could not parse request payload", err.Error())
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	err = service.UpdateTodoByID(ID, todoDTO)
+	if err != nil {
+		if err == apierrors.ErrNotFount {
+			log.Printf("Record not found for ID: %v, err= %v", ID, err.Error())
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		log.Println("Error while updating TODO List", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	msg := dto.Message{Msg: "TODO updated successfully"}
+	writeJSON(w, msg)
 }
