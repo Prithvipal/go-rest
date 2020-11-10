@@ -30,3 +30,22 @@ func GetTodoByID(ID string) (entity.Todo, error) {
 	}
 	return entity.Todo{}, apierrors.ErrNotFount
 }
+
+// DeleteTodoByID ...
+func DeleteTodoByID(ID string) error {
+	index := getIndex(ID)
+	if index == -1 {
+		return apierrors.ErrNotFount
+	}
+	todoList = append(todoList[:index], todoList[index+1:]...)
+	return nil
+}
+
+func getIndex(ID string) int {
+	for indx, todo := range todoList {
+		if todo.ID == ID {
+			return indx
+		}
+	}
+	return -1
+}

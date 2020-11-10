@@ -44,3 +44,8 @@ func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
 	todoDto.Value = todo.Value
 	return
 }
+
+// DeleteTodoByID ...
+func DeleteTodoByID(ID string) error {
+	return dal.DeleteTodoByID(ID)
+}

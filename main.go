@@ -16,6 +16,7 @@ func main() {
 	r.HandleFunc("/api/v1/todo", handler.CreateTodo).Methods("POST")
 	r.HandleFunc("/api/v1/todo", handler.GetTodoList).Methods("GET")
 	r.HandleFunc("/api/v1/todo/{ID}", handler.GetTodoByID).Methods("GET")
+	r.HandleFunc("/api/v1/todo/{ID}", handler.DeleteTodoByID).Methods("DELETE")
 	http.ListenAndServe(":8080", r)
 }
 

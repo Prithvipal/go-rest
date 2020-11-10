@@ -24,7 +24,10 @@ func CreateTodo(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Println("Error while creating TODO", err.Error())
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
+	msg := dto.Message{Msg: "TODO created successfully"}
+	writeJSON(w, msg)
 }
 
 // GetTodoList ...
@@ -56,6 +59,25 @@ func GetTodoByID(w http.ResponseWriter, req *http.Request) {
 	writeJSON(w, todo)
 }
 
+// DeleteTodoByID ...
+func DeleteTodoByID(w http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	ID := vars["ID"]
+	err := service.DeleteTodoByID(ID)
+	if err != nil {
+		if err == apierrors.ErrNotFount {
+			log.Printf("Record not found for ID: %v, err= %v", ID, err.Error())
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		log.Println("Error while getting TODO List", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	msg := dto.Message{Msg: "TODO deleted successfully"}
+	writeJSON(w, msg)
+}
+
 func writeJSON(w http.ResponseWriter, records interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	data, err := json.Marshal(records)
@@ -64,4 +86,8 @@ func writeJSON(w http.ResponseWriter, records interface{}) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	w.Write(data)
+}
+
+func writeError() {
+
 }
