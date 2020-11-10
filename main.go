@@ -4,7 +4,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Prithvipal/go-rest/handler"
+	"github.com/Prithvipal/go-rest/controller"
 	"github.com/gorilla/mux"
 )
 
@@ -13,12 +13,12 @@ func h2(w http.ResponseWriter, _ *http.Request) {
 }
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/api/v1/todo", handler.CreateTodo).Methods("POST")
-	r.HandleFunc("/api/v1/todo", handler.GetTodoList).Methods("GET")
-	r.HandleFunc("/api/v1/todo/{ID}", handler.GetTodoByID).Methods("GET")
-	r.HandleFunc("/api/v1/todo/{ID}/detail", handler.GetTodoDetailByID).Methods("GET")
-	r.HandleFunc("/api/v1/todo/{ID}", handler.DeleteTodoByID).Methods("DELETE")
-	r.HandleFunc("/api/v1/todo/{ID}", handler.UpdateTodoByID).Methods("PUT")
+	r.HandleFunc("/api/v1/todo", controller.CreateTodo).Methods("POST")
+	r.HandleFunc("/api/v1/todo", controller.GetTodoList).Methods("GET")
+	r.HandleFunc("/api/v1/todo/{ID}", controller.GetTodoByID).Methods("GET")
+	r.HandleFunc("/api/v1/todo/{ID}/detail", controller.GetTodoDetailByID).Methods("GET")
+	r.HandleFunc("/api/v1/todo/{ID}", controller.DeleteTodoByID).Methods("DELETE")
+	r.HandleFunc("/api/v1/todo/{ID}", controller.UpdateTodoByID).Methods("PUT")
 	http.ListenAndServe(":8080", r)
 }
 
