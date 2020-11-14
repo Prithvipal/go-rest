@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"time"
 
 	"github.com/Prithvipal/go-rest/dal"
@@ -9,19 +10,24 @@ import (
 )
 
 // CreateTodo ...
-func CreateTodo(todoDTO dto.TodoBaseDTO) error {
+func CreateTodo(todoDTO dto.TodoBaseDTO) (err error) {
 	todo := entity.Todo{
 		Value:     todoDTO.Value,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
-	return dal.SaveTodo(todo)
+	err = dal.SaveTodo(todo)
+	if err != nil {
+		log.Printf("Error while saving Todo: %v", err)
+	}
+	return
 }
 
 // GetTodoList ...
 func GetTodoList() (todos []dto.TodoDTO, err error) {
 	todoList, err := dal.GetTodoList()
 	if err != nil {
+		log.Printf("Error while geting Todo List: %v", err)
 		return
 	}
 	for _, todo := range todoList {
@@ -38,6 +44,7 @@ func GetTodoList() (todos []dto.TodoDTO, err error) {
 func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
 	todo, err := dal.GetTodoByID(ID)
 	if err != nil {
+		log.Printf("Error while getting Todo by ID[%v]: %v", ID, err)
 		return
 	}
 	todoDto.ID = todo.ID
@@ -49,6 +56,7 @@ func GetTodoByID(ID string) (todoDto dto.TodoDTO, err error) {
 func GetTodoDetailByID(ID string) (todoDto dto.TodoDetailDTO, err error) {
 	todo, err := dal.GetTodoByID(ID)
 	if err != nil {
+		log.Printf("Error while getting Todo Details by ID[%v]: %v", ID, err)
 		return
 	}
 	todoDto.ID = todo.ID
@@ -59,8 +67,12 @@ func GetTodoDetailByID(ID string) (todoDto dto.TodoDetailDTO, err error) {
 }
 
 // DeleteTodoByID ...
-func DeleteTodoByID(ID string) error {
-	return dal.DeleteTodoByID(ID)
+func DeleteTodoByID(ID string) (err error) {
+	err = dal.DeleteTodoByID(ID)
+	if err != nil {
+		log.Printf("Error while deleting Todo By ID[%v]: %v", ID, err)
+	}
+	return
 }
 
 // UpdateTodoByID a service method to update Todo
@@ -68,5 +80,9 @@ func UpdateTodoByID(ID string, todoDTO dto.TodoBaseDTO) (err error) {
 	todo := entity.Todo{}
 	todo.Value = todoDTO.Value
 	todo.UpdatedAt = time.Now()
-	return dal.UpdateTodoByID(ID, todo)
+	err = dal.UpdateTodoByID(ID, todo)
+	if err != nil {
+		log.Printf("Error while updating Todo By ID[%v]: %v", ID, err)
+	}
+	return
 }
