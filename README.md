@@ -170,5 +170,23 @@ Record not found with given ID=20
 ```
 
 ### Delete TODO by ID
+#### PART-1
+API response when provided todo id exists in database.<br/>
+**API:** localhost:8080/api/v1/todo/2<br/>
+**Method:** DELETE<br/>
+**Response:**
+```
+{
+    "msg": "TODO deleted successfully"
+}
+```
 
+#### PART-2
+API response when provided todo id does not exist in database.<br/>
+**API:** localhost:8080/api/v1/todo/2<br/>
+**Method:** GET<br/>
+**Response:**
+```
+Record not found with given ID=20
+```
 ### Update TODO by ID
