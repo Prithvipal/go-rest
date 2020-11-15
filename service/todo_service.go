@@ -7,6 +7,7 @@ import (
 	"github.com/Prithvipal/go-rest/dal"
 	"github.com/Prithvipal/go-rest/dto"
 	"github.com/Prithvipal/go-rest/entity"
+	"github.com/Prithvipal/go-rest/models"
 )
 
 // CreateTodo ...
@@ -24,8 +25,9 @@ func CreateTodo(todoDTO dto.TodoBaseDTO) (err error) {
 }
 
 // GetTodoList ...
-func GetTodoList() (todos []dto.TodoDTO, err error) {
-	todoList, err := dal.GetTodoList()
+func GetTodoList(pageable models.Pageable) (todos []dto.TodoDTO, err error) {
+	page := pageable.Page * pageable.Limit
+	todoList, err := dal.GetTodoList(page, pageable.Limit)
 	if err != nil {
 		log.Printf("Error while geting Todo List: %v", err)
 		return

@@ -30,7 +30,13 @@ func CreateTodo(w http.ResponseWriter, req *http.Request) {
 
 // GetTodoList ...
 func GetTodoList(w http.ResponseWriter, req *http.Request) {
-	todos, err := service.GetTodoList()
+	pageable, err := getPageable(req, 0, 10)
+	if err != nil {
+		log.Println("Error while parsing pagination details: ", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	todos, err := service.GetTodoList(pageable)
 	if err != nil {
 		log.Println("Error while getting TODO List", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)

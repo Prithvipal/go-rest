@@ -17,8 +17,16 @@ func SaveTodo(todo entity.Todo) error {
 }
 
 // GetTodoList ...
-func GetTodoList() ([]entity.Todo, error) {
-	return todoList, nil
+func GetTodoList(page, limit int) ([]entity.Todo, error) {
+	limitQ := page + limit
+	if limitQ > len(todoList) {
+		limitQ = len(todoList)
+	}
+	if page > len(todoList) {
+		return []entity.Todo{}, nil
+	}
+	records := todoList[page:limitQ]
+	return records, nil
 }
 
 // GetTodoByID ...

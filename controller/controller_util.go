@@ -2,10 +2,13 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/Prithvipal/go-rest/apierrors"
+	"github.com/Prithvipal/go-rest/models"
 )
 
 func writeSerivceError(w http.ResponseWriter, err error) {
@@ -24,4 +27,28 @@ func writeJSON(w http.ResponseWriter, records interface{}) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	w.Write(data)
+}
+
+func getPageable(req *http.Request, defaultPage, defaultLimit int) (pageable models.Pageable, err error) {
+	page := req.URL.Query().Get("page")
+	if page == "" {
+		pageable.Page = defaultPage
+	} else {
+		pageable.Page, err = strconv.Atoi(page)
+		if err != nil || pageable.Page < 0 {
+			return pageable, errors.New("Invalid page number")
+		}
+	}
+
+	limit := req.URL.Query().Get("limit")
+
+	if limit == "" {
+		pageable.Limit = defaultLimit
+	} else {
+		pageable.Limit, err = strconv.Atoi(limit)
+		if err != nil || pageable.Limit < 1 {
+			return pageable, errors.New("Invalid limit")
+		}
+	}
+	return
 }
