@@ -2,14 +2,14 @@
 
 ## APIs
 
-### Post
+### Create a new TODO
 
-![](docs/post.png)
 
-### Get
 
-When there is no record in database:
+### List TODOs
 
-![](docs/post.png)
+### Get TODO by ID
 
-![](docs/post.png)
+### Delete TODO by ID
+
+### Update TODO by ID
