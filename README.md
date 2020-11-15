@@ -148,6 +148,17 @@
 }
 ```
 ### Get TODO by ID
+#### PART-1
+**API:** localhost:8080/api/v1/todo/2<br/>
+**Method:** GET<br/>
+**Response:**
+```
+{
+    "id": "2",
+    "value": "Todo Number one"
+}
+```
+
 
 ### Delete TODO by ID
 
