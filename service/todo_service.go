@@ -25,13 +25,14 @@ func CreateTodo(todoDTO dto.TodoBaseDTO) (err error) {
 }
 
 // GetTodoList ...
-func GetTodoList(pageable models.Pageable) (todos []dto.TodoDTO, err error) {
+func GetTodoList(pageable models.Pageable) (todoPageable dto.TodoPageableDto, err error) {
 	page := pageable.Page * pageable.Limit
 	todoList, err := dal.GetTodoList(page, pageable.Limit)
 	if err != nil {
 		log.Printf("Error while geting Todo List: %v", err)
 		return
 	}
+	var todos []dto.TodoDTO
 	for _, todo := range todoList {
 		todoDto := dto.TodoDTO{
 			ID: todo.ID,
@@ -39,6 +40,19 @@ func GetTodoList(pageable models.Pageable) (todos []dto.TodoDTO, err error) {
 		todoDto.Value = todo.Value
 		todos = append(todos, todoDto)
 	}
+	total, err := dal.GetTodoCount()
+	if err != nil {
+		log.Printf("Error while geting Todo Count: %v", err)
+		return
+	}
+
+	todoPageable.TodoList = todos
+	todoPageable.Limit = pageable.Limit
+	todoPageable.Page = pageable.Page
+	todoPageable.Count = len(todos)
+	todoPageable.TotalCount = total
+	todoPageable.TotalPages = total / pageable.Limit
+
 	return
 }
 

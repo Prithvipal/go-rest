@@ -25,12 +25,12 @@ type PageableDto struct {
 	Page       int `json:"page"`
 	Limit      int `json:"limit"`
 	Count      int `json:"count"`
-	Total      int `json:"total"`
+	TotalCount int `json:"total_count"`
 	TotalPages int `json:"total_pages"`
 }
 
 // TodoPageableDto Dto to return pageable to Todo
 type TodoPageableDto struct {
-	TodoDTO `json:"records"`
+	TodoList []TodoDTO `json:"records"`
 	PageableDto
 }

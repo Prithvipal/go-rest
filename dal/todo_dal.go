@@ -29,6 +29,11 @@ func GetTodoList(page, limit int) ([]entity.Todo, error) {
 	return records, nil
 }
 
+// GetTodoCount returns total number of todo counts
+func GetTodoCount() (int, error) {
+	return len(todoList), nil
+}
+
 // GetTodoByID ...
 func GetTodoByID(ID string) (entity.Todo, error) {
 	for _, todo := range todoList {
