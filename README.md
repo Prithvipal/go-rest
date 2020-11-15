@@ -1,5 +1,9 @@
 # go-rest
 
+## Layered Architecture
+
+![](docs/layered_architecture.png)
+
 ## APIs
 
 ### Create a new TODO
