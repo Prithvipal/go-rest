@@ -41,14 +41,15 @@ func GetTodoByID(ID string) (entity.Todo, error) {
 			return todo, nil
 		}
 	}
-	return entity.Todo{}, apierrors.ErrNotFount
+
+	return entity.Todo{}, &apierrors.NotFountErr{ID: ID}
 }
 
 // DeleteTodoByID ...
 func DeleteTodoByID(ID string) error {
 	index := getIndex(ID)
 	if index == -1 {
-		return apierrors.ErrNotFount
+		return &apierrors.NotFountErr{ID: ID}
 	}
 	todoList = append(todoList[:index], todoList[index+1:]...)
 	return nil
@@ -67,7 +68,7 @@ func getIndex(ID string) int {
 func UpdateTodoByID(ID string, todo entity.Todo) error {
 	index := getIndex(ID)
 	if index == -1 {
-		return apierrors.ErrNotFount
+		return &apierrors.NotFountErr{ID: ID}
 	}
 	todoList[index].UpdatedAt = todo.UpdatedAt
 	todoList[index].Value = todo.Value

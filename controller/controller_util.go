@@ -12,7 +12,7 @@ import (
 )
 
 func writeSerivceError(w http.ResponseWriter, err error) {
-	if err == apierrors.ErrNotFount {
+	if _, ok := err.(*apierrors.NotFountErr); ok {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
