@@ -77,23 +77,23 @@
         },
         {
             "id": "2",
-            "value": "Todo Number one"
+            "value": "Todo Number two"
         },
         {
             "id": "3",
-            "value": "Todo Number one"
+            "value": "Todo Number three"
         },
         {
             "id": "4",
-            "value": "Todo Number one"
+            "value": "Todo Number four"
         },
         {
             "id": "5",
-            "value": "Todo Number one"
+            "value": "Todo Number five"
         },
         {
             "id": "6",
-            "value": "Todo Number one"
+            "value": "Todo Number six"
         },
         {
             "id": "7",
@@ -190,3 +190,22 @@ API response when provided todo id does not exist in database.<br/>
 Record not found with given ID=20
 ```
 ### Update TODO by ID
+#### PART-1
+API response when provided todo id exists in database.<br/>
+**API:** localhost:8080/api/v1/todo/2<br/>
+**Method:** PUT<br/>
+**Response:**
+```
+{
+    "msg": "TODO updated successfully"
+}
+```
+
+#### PART-2
+API response when provided todo id does not exist in database.<br/>
+**API:** localhost:8080/api/v1/todo/2<br/>
+**Method:** PUT<br/>
+**Response:**
+```
+Record not found with given ID=20
+```
