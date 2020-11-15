@@ -22,8 +22,8 @@
 
 ### List TODOs
 **API:** localhost:8080/api/v1/todo<br/>
-**Description:** When page and limit is not passed then this API will take page as 0 and limit as 10.
 **Method:** GET<br/>
+**Description:** When page and limit is not passed then this API will take page as 0 and limit as 10.<br/>
 **Response:**
 ```
 {
