@@ -32,7 +32,7 @@ func GetTodoList(pageable models.Pageable) (todoPageable dto.TodoPageableDto, er
 		log.Printf("Error while geting Todo List: %v", err)
 		return
 	}
-	var todos []dto.TodoDTO
+	todos := make([]dto.TodoDTO, 0)
 	for _, todo := range todoList {
 		todoDto := dto.TodoDTO{
 			ID: todo.ID,
