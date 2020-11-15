@@ -2,7 +2,7 @@
 
 ## Layered Architecture
 
-![](docs/layered_architecture.png)
+![](docs/layered_achitecture.png)
 
 ## APIs
 
